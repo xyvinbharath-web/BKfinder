@@ -1,0 +1,117 @@
+import axios from "axios";
+import useLoadingStore from "../store/loadingStore";
+
+const API = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:5000",
+  withCredentials: true, // Ensure cookies/headers are sent
+});
+
+// Request Interceptor
+API.interceptors.request.use((config) => {
+  const { setLoading } = useLoadingStore.getState();
+  setLoading(true);
+  return config;
+});
+
+// Response Interceptor
+API.interceptors.response.use(
+  (response) => {
+    const { setLoading } = useLoadingStore.getState();
+    setLoading(false);
+    return response;
+  },
+  (error) => {
+    const { setLoading } = useLoadingStore.getState();
+    setLoading(false);
+    return Promise.reject(error);
+  }
+);
+
+
+// registration
+export const registerUser = (data) => {
+  return API.post("/api/users/register", data);
+};
+
+//get list
+export const getUsers = () => API.get("/api/users/list");
+
+//login
+export const loginAdmin = (data) => API.post("/api/auth/login", data);
+
+// Stall registration
+export const registerStall = (data) => {
+  return API.post("/api/stall/register", data);
+};
+
+// Get all stalls
+export const getStalls = () => {
+  return API.get("/api/stall/list");
+};
+
+// Business award nomination
+export const registerAward = (data) => {
+  return API.post("/api/awards", data);
+};
+
+export const getAwards = () => {
+  return API.get("/api/awards");
+};
+
+// get single user by id
+export const getUserById = (id) => API.get(`/api/users/${id}`);
+
+// download card pdf
+export const downloadCardPdf = (id) =>
+  API.get(`/api/card-pdf/${id}`, {
+    responseType: "blob",
+  });
+
+// Group booking (multiple visitors)
+export const registerGroupBooking = (data) => {
+  return API.post("/api/users/register-group", data);
+};
+
+// Get Razorpay Public Key
+export const getRazorpayKey = () => {
+  return API.get("/api/payment/key");
+};
+
+// Create Razorpay Order
+export const createRazorpayOrder = (payload) => {
+  if (payload && typeof payload === "object") {
+    return API.post("/api/payment/order", payload);
+  }
+  return API.post("/api/payment/order", { amount: payload });
+};
+
+// Admin manual user creation endpoints
+export const adminRegisterUser = (data) => {
+  return API.post("/api/admin/users/register", data);
+};
+
+export const adminRegisterStall = (data) => {
+  return API.post("/api/admin/stall/register", data);
+};
+
+export const adminCreateAward = (data) => {
+  return API.post("/api/admin/awards/create", data);
+};
+
+export const adminCreateBrandHonoring = (data) => {
+  return API.post("/api/admin/brand-honoring/create", data);
+};
+
+export const adminCreateBusinessPresentation = (data) => {
+  return API.post("/api/admin/business-presentation/create", data);
+};
+
+export const adminCreatePanelDiscussion = (data) => {
+  return API.post("/api/admin/panel-discussion/create", data);
+};
+
+export const adminCreateProductLaunch = (data) => {
+  return API.post("/api/admin/product-launch/create", data);
+};
+
+export default API;
