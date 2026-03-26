@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MapPin, Phone, Mail, ArrowUp } from 'lucide-react';
 import xyvinLogo from "../../logos/Xyvin_logo.png";
-import skybertechLogo from "../../assets/partners/Skybertech transparent Logo (1).png";
+import skybertechLogo from "../../logos/skybertech_logo.png";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -134,7 +134,7 @@ function Footer() {
                 <img
                   src={skybertechLogo}
                   alt="Skybertech"
-                  className="h-6 sm:h-8 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                  className="h-6 sm:h-8 object-contain"
                 />
               </div>
 
@@ -150,7 +150,7 @@ function Footer() {
                   <img
                     src={xyvinLogo}
                     alt="Xyvin"
-                    className="h-5 sm:h-6 object-contain opacity-70 hover:opacity-100 transition-opacity filter grayscale hover:grayscale-0"
+                    className="h-5 sm:h-6 object-contain"
                   />
                 </a>
               </div>
